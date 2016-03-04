@@ -20,11 +20,11 @@ angular.module('music.controllers', [])
 		$scope.modal = modal;
 	});
 
-	$ionicModal.fromTemplateUrl('templates/register.html', {
-		scope: $scope
-	}).then(function(modal) {
-		$scope.modal = registerModal;
-	});
+	// $ionicModal.fromTemplateUrl('templates/register.html', {
+	// 	scope: $scope
+	// }).then(function(modal) {
+	// 	$scope.modal = registerModal;
+	// });
 
 	// Triggered in the login modal to close it
 	$scope.closeLogin = function() {
@@ -75,6 +75,22 @@ angular.module('music.controllers', [])
 		{ title: 'Rap', id: 5 },
 		{ title: 'Cowbell', id: 6 }
 	];
+})
+
+.controller('HomeCtrl', function($scope, $http){
+	// Simple GET request example:
+	$http({
+		method: 'GET',
+		url: 'https://www.googleapis.com/youtube/v3/playlists&LLN0Ob_Ta6bIUN_lYyKxI_Cg&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI&part=snippet,contentDetails,statistics,status'
+		}).then(function successCallback(response) {
+			console.log(response);
+		// this callback will be called asynchronously
+		// when the response is available
+		}, function errorCallback(response) {
+			console.log('het is kapot:(((((((((');
+		// called asynchronously if an error occurs
+		// or server returns response with an error status.
+	});
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
