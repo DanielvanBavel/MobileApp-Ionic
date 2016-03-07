@@ -1,5 +1,4 @@
-angular.module('music.controllers', [])
-
+angular.module('music.controllers', ['youtube-embed'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -67,26 +66,13 @@ angular.module('music.controllers', [])
 	// };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-	$scope.playlists = [
-		{ title: 'Mijn playlist', id: 1 },
-		{ title: 'Chill', id: 2 },
-		{ title: 'Dubstep', id: 3 },
-		{ title: 'Indie', id: 4 },
-		{ title: 'Rap', id: 5 },
-		{ title: 'Cowbell', id: 6 }
-	];
-})
-
-.controller('HomeCtrl', function($scope, $http){
-	// Simple GET request example:
+.controller('PlaylistsCtrl', function($scope, $http) {
 	$http({
 		method: 'GET',
 		url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=FLL7gFFBTgbNSpBReiip0xdA&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
-
-
 		}).then(function successCallback(response) {
-			console.log(response);
+			$scope.playlists = response.data.items;
+			$scope.theBestVideo = 'DHGxEVHZXlU';
 		// this callback will be called asynchronously
 		// when the response is available
 		}, function errorCallback(response) {
@@ -94,6 +80,11 @@ angular.module('music.controllers', [])
 		// called asynchronously if an error occurs
 		// or server returns response with an error status.
 	});
+})
+
+.controller('HomeCtrl', function($scope, $http){
+	// Simple GET request example:
+	
 
 	$http({
 		method: 'GET',
@@ -107,5 +98,31 @@ angular.module('music.controllers', [])
 	});
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $http) {
+
+		$http({
+		method: 'GET',
+		url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=FLL7gFFBTgbNSpBReiip0xdA&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
+		}).then(function successCallback(response) {
+			$scope.playlists = response.data.items;
+			$scope.theBestVideo = 'DHGxEVHZXlU';
+			console.log(response);
+		// this callback will be called asynchronously
+		// when the response is available
+		}, function errorCallback(response) {
+			console.log('het is kapot:(((((((((');
+		// called asynchronously if an error occurs
+		// or server returns response with an error status.
+	});
 })
+
+
+
+
+
+
+
+
+
+
+
