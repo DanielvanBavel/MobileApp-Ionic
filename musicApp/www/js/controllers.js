@@ -1,5 +1,15 @@
 angular.module('music.controllers', ['youtube-embed'])
 
+.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from our assets domain.  Notice the difference between * and **.
+    'https://i.ytimg.com/**'
+  ])
+})
+
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
 	// With the new view caching in Ionic, Controllers are only called
@@ -69,10 +79,10 @@ angular.module('music.controllers', ['youtube-embed'])
 .controller('PlaylistsCtrl', function($scope, $http) {
 	$http({
 		method: 'GET',
-		url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=FLL7gFFBTgbNSpBReiip0xdA&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
+		url: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCnXN1WZ57YHaSgIKbDHEnDw&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
 		}).then(function successCallback(response) {
 			$scope.playlists = response.data.items;
-			$scope.theBestVideo = 'DHGxEVHZXlU';
+			console.log(response.data);
 		// this callback will be called asynchronously
 		// when the response is available
 		}, function errorCallback(response) {
@@ -84,8 +94,6 @@ angular.module('music.controllers', ['youtube-embed'])
 
 .controller('HomeCtrl', function($scope, $http){
 	// Simple GET request example:
-	
-
 	$http({
 		method: 'GET',
 		url: 'https://api.soundcloud.com/users/28914014/favorites?client_id=e72abce51a00fd0b1b9e8f30410cbab8'
@@ -98,15 +106,16 @@ angular.module('music.controllers', ['youtube-embed'])
 	});
 })
 
-.controller('PlaylistCtrl', function($scope, $http) {
+.controller('PlaylistCtrl', function($scope, $http, $location) {
+		var url = $location.path();
 
+		url = url.split('/');
 		$http({
 		method: 'GET',
-		url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=FLL7gFFBTgbNSpBReiip0xdA&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
+		url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=5&playlistId=' + url[3] + '&fields=items%2CpageInfo&key=AIzaSyAnoF9yGSWHOEttc0dc_pLoEbZqgMafuLI'
 		}).then(function successCallback(response) {
 			$scope.playlists = response.data.items;
-			$scope.theBestVideo = 'DHGxEVHZXlU';
-			console.log(response);
+			console.log(response.data.items);
 		// this callback will be called asynchronously
 		// when the response is available
 		}, function errorCallback(response) {

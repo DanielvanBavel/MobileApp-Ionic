@@ -1,29 +1,7 @@
 <ion-view view-title="Playlist">
   <ion-content>
-    <div class="list">
-	    <a class="item item-thumbnail-left" href="#">
-	      	<img src="img/dookie.jpg">
-	      	<h2>Pretty Hate Machine</h2>
-	      	<p>Nine Inch Nails</p>
-	    </a>
-
-	    <a class="item item-thumbnail-left" href="#">
-	      	<img src="img/dookie.jpg">
-	      	<h2>Pretty Hate Machine</h2>
-	      	<p>Nine Inch Nails</p>
-	    </a>
-
-	    <a class="item item-thumbnail-left" href="#">
-	      	<img src="img/dookie.jpg">
-	      	<h2>Pretty Hate Machine</h2>
-	     	<p>Nine Inch Nails</p>
-	    </a>
-
-	    <a class="item item-thumbnail-left" href="#">
-	     	<img src="img/dookie.jpg">
-	      	<h2>Pretty Hate Machine</h2>
-	      	<p>Nine Inch Nails</p>
-	    </a>
-	</div>
+    <ion-item ng-repeat="playlist in playlists">
+    <youtube-video video-id="playlist.contentDetails.videoId"></youtube-video>
+    </ion-item>
   </ion-content>
 </ion-view>
