@@ -1,24 +1,17 @@
 <ion-view view-title="Home">
 	<ion-modal-view ng-controller="HomeCtrl">
-		  <ion-content>
-		    <div class="list">
-		      <ion-audio-track ng-repeat="track in tracks" track="track">
-		        <div class="card">
-		          <div class="item item-thumbnail-left">
-		            <img src="">
-		            <h2>{{track.title}}</h2>
-		            <p>{{track.artist}}</p>
-		            <ion-audio-controls>
-		              <a class="button button-icon icon" ion-audio-play></a>
-		              <ion-spinner icon="ios" style="position: relative; top: 8px; left: 4px"></ion-spinner>
-		            </ion-audio-controls>
-		          </div>
-		          	<div class="item item-divider">
-		            	<ion-audio-progress-bar display-time></ion-audio-progress-bar>
-		        	</div>
+		<div class="soundcloudFavorites" ng-repeat="favorite in favorites">
+		    <div class="card">
+		        <div class="item item-thumbnail-left">
+			        <img src="{{ favorite.artwork_url}}">
+		            <h2>{{ favorite.title }}</h2>
+		            <p>{{ favorite.description }}</p>
 		        </div>
-		      </ion-audio-track>
-		    </div>
-  		</ion-content>
+	        </div>
+	    </div>
+
+		<audio controls="" autoplay="true" name="media">
+			<source src="https://api.soundcloud.com/tracks/248605145/stream" type="audio/mpeg">
+		</audio>
 	</ion-modal-view>
 </ion-view>

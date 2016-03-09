@@ -83,21 +83,18 @@ angular.module('music.controllers', ['youtube-embed'])
 })
 
 .controller('HomeCtrl', function($scope, $http){
-	// Simple GET request example:
-	
 
 	$http({
 		method: 'GET',
 		url: 'https://api.soundcloud.com/users/28914014/favorites?client_id=e72abce51a00fd0b1b9e8f30410cbab8'
 	}).then(function successCallback(response) {
-			console.log(response);
+			$scope.favorites = response.data;
 		}, function errorCallback(response) {
 			console.log('het is kapot:(((((((((');
 		// called asynchronously if an error occurs
 		// or server returns response with an error status.
 	});
 })
-
 .controller('PlaylistCtrl', function($scope, $http) {
 
 		$http({
