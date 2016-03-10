@@ -1,3 +1,5 @@
+document.soundcloudUrl = '';
+
 angular.module('music.controllers', ['youtube-embed'])
 
 .config(function($sceDelegateProvider) {
@@ -5,8 +7,8 @@ angular.module('music.controllers', ['youtube-embed'])
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
-    'https://i.ytimg.com/**'
-  ])
+    'https://i.ytimg.com/**',
+    'https://api.soundcloud.com/**']);
 })
 
 
@@ -99,12 +101,19 @@ angular.module('music.controllers', ['youtube-embed'])
 		url: 'https://api.soundcloud.com/users/28914014/favorites?client_id=e72abce51a00fd0b1b9e8f30410cbab8'
 	}).then(function successCallback(response) {
 			$scope.favorites = response.data;
+
+			console.log(response.data);
 		}, function errorCallback(response) {
 			console.log('het is kapot:(((((((((');
 		// called asynchronously if an error occurs
 		// or server returns response with an error status.
 	});
+
+	$scope.playMusic = function(clickEvent) {
+		soundcloudUrl = clickEvent;
+	}
 })
+
 .controller('PlaylistCtrl', function($scope, $http, $location) {
 		var url = $location.path();
 		url = url.split('/');

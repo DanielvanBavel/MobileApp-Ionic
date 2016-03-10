@@ -1,7 +1,7 @@
-<ion-view view-title="Home">
-	<ion-modal-view ng-controller="HomeCtrl">
+<ion-view view-title="Home" ng-controller="HomeCtrl" >
+	<ion-content>
 		<div class="soundcloudFavorites" ng-repeat="favorite in favorites">
-		    <div class="card">
+		    <div class="card" ng-click="playMusic(favorite.stream_url)">
 		        <div class="item item-thumbnail-left">
 			        <img src="{{ favorite.artwork_url}}">
 		            <h2>{{ favorite.title }}</h2>
@@ -9,9 +9,9 @@
 		        </div>
 	        </div>
 	    </div>
-
-		<audio controls="" autoplay="true" name="media">
-			<source src="https://api.soundcloud.com/tracks/248605145/stream" type="audio/mpeg">
-		</audio>
-	</ion-modal-view>
+	</ion-content>
+	
+	<audio ng-controller="musicPlayerCtrl" controls="" id="musicPlayer"> 
+		<source ng-src="{{soundcloudUrl}}?client_id=e72abce51a00fd0b1b9e8f30410cbab8" preload="auto">
+	</audio>
 </ion-view>
