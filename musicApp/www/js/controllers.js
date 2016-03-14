@@ -1,5 +1,3 @@
-document.soundcloudUrl = '';
-
 angular.module('music.controllers', ['youtube-embed'])
 
 .config(function($sceDelegateProvider) {
@@ -10,7 +8,6 @@ angular.module('music.controllers', ['youtube-embed'])
     'https://i.ytimg.com/**',
     'https://api.soundcloud.com/**']);
 })
-
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -94,15 +91,13 @@ angular.module('music.controllers', ['youtube-embed'])
 	});
 })
 
-.controller('HomeCtrl', function($scope, $http){
+.controller('HomeCtrl', function($scope, $http, $sce){
 	// Simple GET request example:
 	$http({
 		method: 'GET',
 		url: 'https://api.soundcloud.com/users/28914014/favorites?client_id=e72abce51a00fd0b1b9e8f30410cbab8'
 	}).then(function successCallback(response) {
 			$scope.favorites = response.data;
-
-			console.log(response.data);
 		}, function errorCallback(response) {
 			console.log('het is kapot:(((((((((');
 		// called asynchronously if an error occurs
@@ -111,8 +106,32 @@ angular.module('music.controllers', ['youtube-embed'])
 
 	$scope.playMusic = function(clickEvent) {
 		soundcloudUrl = clickEvent;
+		SC = $sce.trustAsResourceUrl(soundcloudUrl);
+		test = $sce.getTrustedHtml(SC);
+		console.log(test);
 	}
 })
+
+
+/*Spotify
+Client ID: 06115bb84b9c4c55a9e332a63dc83058
+Client Secret: 236f481fc98641c7acefd5051d7be17a
+*/
+// .controller('HomeCtrl', function($scope, $http){
+// 	// Simple GET request example:
+// 	$http({
+// 		method: 'GET',
+// 		url: 'https://api.spotify.com/v1/browse/new-releases'
+// 	}).then(function successCallback(response) {
+// 			$scope.browse = response.data;
+// 			console.log(response.data);
+// 		}, function errorCallback(response) {
+// 			console.log('het is kapot:(((((((((');
+// 		// called asynchronously if an error occurs
+// 		// or server returns response with an error status.
+// 	});
+// })
+
 
 .controller('PlaylistCtrl', function($scope, $http, $location) {
 		var url = $location.path();

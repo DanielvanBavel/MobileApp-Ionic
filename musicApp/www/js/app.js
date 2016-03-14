@@ -50,20 +50,20 @@ angular.module('music', ['ionic', 'music.controllers'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-
     .state('app.settings', {
       url: '/settings',
       views: {
         'menuContent': {
           templateUrl: 'templates/settings.html'
+        }
+      }
+    })
+
+    .state('app.playlistOverview', {
+      url: '/playlistOverview',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/playlistOverview.html'
         }
       }
     })

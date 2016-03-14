@@ -3,15 +3,16 @@
 		<div class="soundcloudFavorites" ng-repeat="favorite in favorites">
 		    <div class="card" ng-click="playMusic(favorite.stream_url)">
 		        <div class="item item-thumbnail-left">
-			        <img src="{{ favorite.artwork_url}}">
-		            <h2>{{ favorite.title }}</h2>
-		            <p>{{ favorite.description }}</p>
+			        <img ng-src="{{favorite.artwork_url}}">
+		            <h2>{{favorite.title}}</h2>
+		            <p>{{favorite.description}}</p>
+		            <span class="soundcloud">Soundcloud</span>
 		        </div>
 	        </div>
 	    </div>
 	</ion-content>
 	
-	<audio ng-controller="musicPlayerCtrl" controls="" id="musicPlayer"> 
-		<source ng-src="{{soundcloudUrl}}?client_id=e72abce51a00fd0b1b9e8f30410cbab8" preload="auto">
+	<audio controls="" id="musicPlayer"> 
+		<source ng-src="{{test}}?client_id=e72abce51a00fd0b1b9e8f30410cbab8" preload="auto">
 	</audio>
 </ion-view>
