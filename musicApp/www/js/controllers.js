@@ -104,11 +104,11 @@ angular.module('music.controllers', ['youtube-embed'])
 		// or server returns response with an error status.
 	});
 
-	$scope.playMusic = function(clickEvent) {
+	$scope.playMusic = function(clickEvent, soundcloudUrl) {
 		soundcloudUrl = clickEvent;
-		SC = $sce.trustAsResourceUrl(soundcloudUrl);
-		test = $sce.getTrustedHtml(SC);
-		console.log(test);
+		client_id = "?client_id=e72abce51a00fd0b1b9e8f30410cbab8";
+		SC = soundcloudUrl + client_id;
+		return SC;
 	}
 })
 

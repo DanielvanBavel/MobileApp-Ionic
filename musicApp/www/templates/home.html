@@ -1,7 +1,7 @@
 <ion-view view-title="Home" ng-controller="HomeCtrl" >
 	<ion-content>
-		<div class="soundcloudFavorites" ng-repeat="favorite in favorites">
-		    <div class="card" ng-click="playMusic(favorite.stream_url)">
+		<div class="soundcloudFavorites" ng-repeat="favorite in favorites" ng-click="playMusic(favorite.stream_url)">
+		    <div class="card" >
 		        <div class="item item-thumbnail-left">
 			        <img ng-src="{{favorite.artwork_url}}">
 		            <h2>{{favorite.title}}</h2>
@@ -13,6 +13,6 @@
 	</ion-content>
 	
 	<audio controls="" id="musicPlayer"> 
-		<source ng-src="{{test}}?client_id=e72abce51a00fd0b1b9e8f30410cbab8" preload="auto">
+		<source ng-src="{{playMusic(SC)}}" Spreload="auto">
 	</audio>
 </ion-view>
