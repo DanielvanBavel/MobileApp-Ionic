@@ -1,4 +1,4 @@
-angular.module('music.controllers', ['youtube-embed'])
+angular.module('music.controllers', ['youtube-embed', 'soundCloud'])
 
 .config(function($sceDelegateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist([
@@ -6,7 +6,8 @@ angular.module('music.controllers', ['youtube-embed'])
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
     'https://i.ytimg.com/**',
-    'https://api.soundcloud.com/**']);
+    'https://api.soundcloud.com/**',
+    'https://i.scdn.co/**']);
 })
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -19,15 +20,8 @@ angular.module('music.controllers', ['youtube-embed'])
 	//});
 
 	// Form data for the login modal
-	$scope.loginData = {};
 	$scope.registerData = {}
 
-	// Create the login modal that we will use later
-	$ionicModal.fromTemplateUrl('templates/login.html', {
-		scope: $scope
-	}).then(function(modal) {
-		$scope.modal = modal;
-	});
 
 	// $ionicModal.fromTemplateUrl('templates/register.html', {
 	// 	scope: $scope
@@ -40,21 +34,6 @@ angular.module('music.controllers', ['youtube-embed'])
 		$scope.modal.hide();
 	};
 
-	// Open the login modal
-	$scope.login = function() {
-		$scope.modal.show();
-	};
-
-	// Perform the login action when the user submits the login form
-	$scope.doLogin = function() {
-		console.log('Doing login', $scope.loginData);
-
-		// Simulate a login delay. Remove this and replace with your login
-		// code if using a login system
-		$timeout(function() {
-	  		$scope.closeLogin();
-		}, 1000);
-	};
 
 	$scope.register = function() {
 		$scope.registerModal.show();
@@ -75,6 +54,21 @@ angular.module('music.controllers', ['youtube-embed'])
 	// };
 })
 
+.controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
+    $scope.data = {};
+ 
+    $scope.login = function() {
+        LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
+            $state.go('tab.dash');
+        }).error(function(data) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Login failed!',
+                template: 'Please check your credentials!'
+            });
+        });
+    }
+})
+
 .controller('PlaylistsCtrl', function($scope, $http) {
 	$http({
 		method: 'GET',
@@ -91,27 +85,6 @@ angular.module('music.controllers', ['youtube-embed'])
 	});
 })
 
-.controller('HomeCtrl', function($scope, $http, $sce){
-	// Simple GET request example:
-	$http({
-		method: 'GET',
-		url: 'https://api.soundcloud.com/users/28914014/favorites?client_id=e72abce51a00fd0b1b9e8f30410cbab8'
-	}).then(function successCallback(response) {
-			$scope.favorites = response.data;
-		}, function errorCallback(response) {
-			console.log('het is kapot:(((((((((');
-		// called asynchronously if an error occurs
-		// or server returns response with an error status.
-	});
-
-	$scope.playMusic = function(clickEvent, soundcloudUrl) {
-		soundcloudUrl = clickEvent;
-		client_id = "?client_id=e72abce51a00fd0b1b9e8f30410cbab8";
-		SC = soundcloudUrl + client_id;
-		return SC;
-	}
-})
-
 
 /*Spotify
 Client ID: 06115bb84b9c4c55a9e332a63dc83058
@@ -121,7 +94,7 @@ Client Secret: 236f481fc98641c7acefd5051d7be17a
 // 	// Simple GET request example:
 // 	$http({
 // 		method: 'GET',
-// 		url: 'https://api.spotify.com/v1/browse/new-releases'
+// 		url: 'https://api.spotify.com/v1/users/11154843760/browse'
 // 	}).then(function successCallback(response) {
 // 			$scope.browse = response.data;
 // 			console.log(response.data);

@@ -1,18 +1,8 @@
-<ion-view view-title="Home" ng-controller="HomeCtrl" >
+<ion-view view-title="Home" cache-view="false" >
 	<ion-content>
-		<div class="soundcloudFavorites" ng-repeat="favorite in favorites" ng-click="playMusic(favorite.stream_url)">
-		    <div class="card" >
-		        <div class="item item-thumbnail-left">
-			        <img ng-src="{{favorite.artwork_url}}">
-		            <h2>{{favorite.title}}</h2>
-		            <p>{{favorite.description}}</p>
-		            <span class="soundcloud">Soundcloud</span>
-		        </div>
-	        </div>
-	    </div>
 	</ion-content>
 	
-	<audio controls="" id="musicPlayer"> 
-		<source ng-src="{{playMusic(SC)}}" Spreload="auto">
+	<audio controls="" id="musicPlayer" autoplay="true" preload="auto"> 
+		<source ng-src="">
 	</audio>
 </ion-view>

@@ -59,14 +59,15 @@ angular.module('music', ['ionic', 'music.controllers'])
       }
     })
 
-    .state('app.playlistOverview', {
-      url: '/playlistOverview',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlistOverview.html'
-        }
-      }
-    })
+    .state('app.login', {
+    	url: '/login',
+      	views: {
+      	'menuContent': {
+        	templateUrl: 'templates/login.html',
+        	controller: 'LoginCtrl'
+      		}
+    	}
+  	})
 
     .state('app.account', {
       url: '/account',
@@ -77,25 +78,44 @@ angular.module('music', ['ionic', 'music.controllers'])
       }
     })
 
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.playlistOverview', {
+      url: '/playlistOverview',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
+          templateUrl: 'templates/playlistOverview.html'
+        }
+      }
+    })
+
+    .state('app.SoundcloudLikes', {
+      url: '/SoundcloudLikes',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/SoundcloudLikes.html',
+          controller: 'SoundcloudCtrl'
+        }
+      }
+    })
+
+    .state('app.YoutubePlaylists', {
+      url: '/YoutubePlaylists',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/YoutubePlaylists.html',
           controller: 'PlaylistsCtrl'
         }
       }
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/YoutubePlaylists/:playlistId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
+        templateUrl: 'templates/YoutubePlaylists.html',
         controller: 'PlaylistCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/');
+  $urlRouterProvider.otherwise('app/');
 });
