@@ -54,27 +54,19 @@ app.config(function($sceDelegateProvider) {
 	// };
 })
 
-.controller('LoginCtrl', function($scope) {
+.controller('LoginCtrl', function($scope, $state) {
 	/*facebook login*/
 	$scope.FBLogin = function() {
 		FB.login(function(response) {
 		    if (response.authResponse) {
 		     	FB.api('/me', function(response) {
-		    		var accessToken = FB.getAuthResponse().accessToken;
-
 		    		FB.getLoginStatus(function(response) {
-						if (response.status === 'connected') {
-					    // the user is logged in and has authenticated your
-					    // app, and response.authResponse supplies
-					    // the user's ID, a valid access token, a signed
-					    // request, and the time the access token 
-					    // and signed request each expire
-					    var uid = response.authResponse.userID;
-					    var accessToken = response.authResponse.accessToken;
-						}
+		    			if (response.status === 'connected') {
+		    				var uid = response.authResponse.userID;
+							var accessToken = FB.getAuthResponse().accessToken;
+		    				$state.go('app.home');
+		    			}
 					});
-		       		console.log('Good to see you, ' + response.name + '.');
-		       		/*stuff to do here*/
 		    	});
 		    } 
 		    else {
@@ -85,17 +77,17 @@ app.config(function($sceDelegateProvider) {
 })
 
 .controller('HomeCtrl', function($scope, $http){
-	$http({
-		method: 'GET',
-		//url: 'https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Aall-music&client_id=e72abce51a00fd0b1b9e8f30410cbab8&limit=20&offset=0'
-	}).then(function successCallback(response) {
-			$scope.charts = response.data.track;
-			console.log(response.data.track);
-		}, function errorCallback(response) {
-			console.log('het is kapot:(((((((((');
-		// called asynchronously if an error occurs
-		// or server returns response with an error status.
-	})
+	// $http({
+	// 	method: 'GET',
+	// 	//url: 'https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Aall-music&client_id=e72abce51a00fd0b1b9e8f30410cbab8&limit=20&offset=0'
+	// }).then(function successCallback(response) {
+	// 		$scope.charts = response.data.track;
+	// 		console.log(response.data.track);
+	// 	}, function errorCallback(response) {
+	// 		console.log('het is kapot:(((((((((');
+	// 	// called asynchronously if an error occurs
+	// 	// or server returns response with an error status.
+	// })
 })
 
 .controller('PlaylistsCtrl', function($scope, $http) {
