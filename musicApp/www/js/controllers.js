@@ -1,13 +1,13 @@
-angular.module('music.controllers', ['youtube-embed', 'soundCloud'])
+var app = angular.module('music.controllers', ['youtube-embed']);
 
-.config(function($sceDelegateProvider) {
-  $sceDelegateProvider.resourceUrlWhitelist([
-    // Allow same origin resource loads.
-    'self',
-    // Allow loading from our assets domain.  Notice the difference between * and **.
-    'https://i.ytimg.com/**',
-    'https://api.soundcloud.com/**',
-    'https://i.scdn.co/**']);
+app.config(function($sceDelegateProvider) {
+ 	$sceDelegateProvider.resourceUrlWhitelist([
+	    // Allow same origin resource loads.
+	    'self',
+	    // Allow loading from our assets domain.  Notice the difference between * and **.
+	    'https://i.ytimg.com/**',
+	    'https://api.soundcloud.com/**',
+	    'https://i.scdn.co/**']);
 })
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -54,19 +54,48 @@ angular.module('music.controllers', ['youtube-embed', 'soundCloud'])
 	// };
 })
 
-.controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
-    $scope.data = {};
- 
-    $scope.login = function() {
-        LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-            $state.go('tab.dash');
-        }).error(function(data) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'Login failed!',
-                template: 'Please check your credentials!'
-            });
-        });
-    }
+.controller('LoginCtrl', function($scope) {
+	/*facebook login*/
+	$scope.FBLogin = function() {
+		FB.login(function(response) {
+		    if (response.authResponse) {
+		     	FB.api('/me', function(response) {
+		    		var accessToken = FB.getAuthResponse().accessToken;
+
+		    		FB.getLoginStatus(function(response) {
+						if (response.status === 'connected') {
+					    // the user is logged in and has authenticated your
+					    // app, and response.authResponse supplies
+					    // the user's ID, a valid access token, a signed
+					    // request, and the time the access token 
+					    // and signed request each expire
+					    var uid = response.authResponse.userID;
+					    var accessToken = response.authResponse.accessToken;
+						}
+					});
+		       		console.log('Good to see you, ' + response.name + '.');
+		       		/*stuff to do here*/
+		    	});
+		    } 
+		    else {
+		    	console.log('User cancelled login or did not fully authorize.');
+		    }
+		});
+	}
+})
+
+.controller('HomeCtrl', function($scope, $http){
+	$http({
+		method: 'GET',
+		//url: 'https://api-v2.soundcloud.com/charts?kind=top&genre=soundcloud%3Agenres%3Aall-music&client_id=e72abce51a00fd0b1b9e8f30410cbab8&limit=20&offset=0'
+	}).then(function successCallback(response) {
+			$scope.charts = response.data.track;
+			console.log(response.data.track);
+		}, function errorCallback(response) {
+			console.log('het is kapot:(((((((((');
+		// called asynchronously if an error occurs
+		// or server returns response with an error status.
+	})
 })
 
 .controller('PlaylistsCtrl', function($scope, $http) {
@@ -121,16 +150,6 @@ Client Secret: 236f481fc98641c7acefd5051d7be17a
 			console.log('het is kapot:(((((((((');
 		// called asynchronously if an error occurs
 		// or server returns response with an error status.
-	});
+	})
 })
-
-
-
-
-
-
-
-
-
-
 

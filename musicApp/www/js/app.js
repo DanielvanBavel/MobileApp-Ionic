@@ -92,9 +92,9 @@ angular.module('music', ['ionic', 'music.controllers'])
       views: {
         'menuContent': {
           templateUrl: 'templates/SoundcloudLikes.html',
-          controller: 'SoundcloudCtrl'
         }
-      }
+      },
+      controller: 'SoundcloudCtrl'
     })
 
     .state('app.YoutubePlaylists', {
